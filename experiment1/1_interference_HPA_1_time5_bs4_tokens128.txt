@@ -1,0 +1,10 @@
+==============llama2-13b HPA 1 1_time5_bs4_tokens128===================
+xlabel = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+all_time_avg = [32.9748681640625]
+deploy_time_avg = [21.413267578125]
+inference_time_avg = [11.5616005859375]
+all_time_max = [32.9748681640625]
+deploy_time_max = [21.413267578125]
+inference_time_max = [11.5616005859375]
+======================= module time ========================
+inference_time_avg = [0.0017566642584279177]

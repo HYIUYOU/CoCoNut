@@ -1,0 +1,8 @@
+==============llama2-13b 1_time5_bs2_tokens128===================
+xlabel = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+all_time_avg = [38.5145322265625]
+deploy_time_avg = [23.805734375]
+inference_time_avg = [14.7087978515625] 7s
+all_time_max = [38.5145322265625]
+deploy_time_max = [23.805734375]
+inference_time_max = [14.7087978515625]

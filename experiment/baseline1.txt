@@ -1,0 +1,77 @@
+==============llama2-13b===================
+xlabel = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200, 205, 210, 215, 220, 225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 350, 355, 360, 365, 370, 375, 380, 385, 390, 395, 400, 405, 410, 415, 420, 425, 430, 435, 440, 445, 450]
+all_time_avg = [27.200355195999144, 32.61796407699585, 41.21772518157959, 51.734149885177615, 63.08689737319946, 75.99200983047486, 87.47081799507141, 106.46303343772888, 121.34110736846924, 141.9450454711914]
+deploy_time_avg = [18.526309108734132, 16.48286862373352, 15.581141138076783, 16.330463933944703, 15.807005023956298, 16.431925964355468, 15.557172060012817, 16.213819646835326, 15.840357732772826, 17.11851110458374]
+inference_time_avg = [8.674046087265015, 16.13509545326233, 25.636584043502808, 35.40368595123291, 47.27989234924316, 59.560083866119385, 71.9136459350586, 90.24921379089355, 105.50074963569641, 124.82653436660766,5247.848853588104 ,10276.783583641052]
+all_time_max = [29.543081283569336, 33.734251260757446, 42.681559324264526, 52.08009219169617, 65.71322059631348, 77.62088918685913, 90.31979012489319, 112.54712557792664, 127.66162896156311, 145.53182983398438]
+deploy_time_max = [19.403236865997314, 17.295113563537598, 15.817904233932495, 17.39667057991028, 16.880004405975342, 17.073745012283325, 15.782748460769653, 17.366840600967407, 16.832148551940918, 19.604706287384033]
+inference_time_max = [10.139844417572021, 16.468831062316895, 26.86365509033203, 36.11089825630188, 49.85753774642944, 61.780457735061646, 74.66114568710327, 96.85249495506287, 113.02427434921265, 128.2753620147705]
+
+
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:25<00:00,  8.65s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 5247.848853588104 
+
+==================================================================================================== 
+
+Iteration 1 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:52<00:00, 17.62s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 9935.788801908493 
+
+==================================================================================================== 
+
+Iteration 2 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:52<00:00, 17.48s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 9802.075159788132 
+
+==================================================================================================== 
+
+Iteration 3 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:52<00:00, 17.37s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 9856.720527172089 
+
+==================================================================================================== 
+
+Iteration 4 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:43<00:00, 14.36s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 7273.490681648254 
+
+==================================================================================================== 
+
+Iteration 5 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:45<00:00, 15.30s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 7820.690461158752 
+
+==================================================================================================== 
+
+Iteration 1 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:52<00:00, 17.63s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 10276.783583641052 
+
+==================================================================================================== 
+
+Iteration 2 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:50<00:00, 16.83s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+inference time 9151.804855108261 
+
+==================================================================================================== 
+
+Iteration 3 complete, memory cleared.
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████| 3/3 [00:24<00:00,  8.09s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
