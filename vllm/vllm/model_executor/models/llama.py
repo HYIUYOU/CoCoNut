@@ -56,7 +56,8 @@ from .interfaces import SupportsLoRA, SupportsPP
 from .utils import (AutoWeightsLoader, PPMissingLayer, is_pp_missing_parameter,
                     make_empty_intermediate_tensors_factory, make_layers,
                     maybe_prefix)
-
+import time
+layer_time = []
 
 class LlamaMLP(nn.Module):
 
@@ -268,6 +269,8 @@ class LlamaDecoderLayer(nn.Module):
         return hidden_states, residual
 
 
+
+
 @support_torch_compile
 class LlamaModel(nn.Module):
 
@@ -337,10 +340,11 @@ class LlamaModel(nn.Module):
 
         for i in range(self.start_layer, self.end_layer):
             layer = self.layers[i]
+            start_time = time.perf_counter()
             hidden_states, residual = layer(positions, hidden_states,
                                             kv_caches[i - self.start_layer],
                                             attn_metadata, residual)
-
+            layer_time.append(time.perf_counter() - start_time)
         if not get_pp_group().is_last_rank:
             return IntermediateTensors({
                 "hidden_states": hidden_states,
