@@ -1,5 +1,5 @@
 # CoCoNut
-**Come a Cup of Coconut.**
+*Come a Cup of Coconut.*
 ----------------
 ## Quick Start
 
