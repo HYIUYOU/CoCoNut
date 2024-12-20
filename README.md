@@ -1,5 +1,5 @@
 # CoCoNut
-**CoCoNut is a drinking buddy for your deep learning models.**
+**Come a Cup of Coconut.**
 ----------------
 ## Quick Start
 
