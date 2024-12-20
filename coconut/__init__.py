@@ -9,13 +9,23 @@ from .monitor.module_monitor import ModuleMonitor
 from .ops.HMA import HMA
 from .ops.Migration import Migration
 
+# 导入其他的类
+from .utils import *
+
 # 设置默认导出
 __all__ = [
     '__version__',
     'GPUMonitor',
     'ModuleMonitor',
     'HMA',
-    'Migration'
+    'Migration',
+    'utils',
+    'COPY',
+    'U_ops',
+    'create_forward',
+    'logger',
+    'torch',
+    'LlamaDecoderLayer'
 ]
 
 # 包的基本信息

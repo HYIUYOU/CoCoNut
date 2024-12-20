@@ -2,6 +2,7 @@ from coconut.utils import *
 from typing import Optional, Tuple, Union, List
 from concurrent.futures import ThreadPoolExecutor
 from transformers.modeling_outputs import BaseModelOutputWithPast
+from transformers import LlamaModel
 
 def create_mtiHPA_copy_forward(module:dict,module_device,module_copy_device,half_idx = 3):
     def my_forward(
@@ -213,3 +214,27 @@ def create_mtiHPA_copy_forward(module:dict,module_device,module_copy_device,half
     
     return my_forward
 
+# @TODO: 实现动态性以及多次复制的情况，目前只支持单次复制
+def HMA(module, module_device, module_copy_device, half_idx = 3):
+        """HMA 还不完善,.目前只支持复制和单次复制
+        Args:
+            module: 模型的某一层
+            module_device: 模型的某一层的设备
+            module_copy_device: 模型的某一层的复制的设备
+            half_idx: 用于切分模型的索引
+        Examples:
+            >>> from coconut import *
+            >>> module_copy = copy_module(4,device1,model)
+            >>> module_copy_1 = copy_module(4,device1,model)
+            >>> module_copy_2 = copy_module(8,device1,model)
+            >>> module_copy_3 = copy_module(14,device1,model)
+            >>> module = {
+            >>>     4:module_copy,
+            >>>     8:module_copy_2,
+            >>>     14:module_copy_3
+            >>>   }
+            >>> HMA(module,device0,device1,half_idx = 3)
+
+        """
+        LlamaModel.forward = create_mtiHPA_copy_forward(module, module_device, module_copy_device, half_idx)
+    # return module
