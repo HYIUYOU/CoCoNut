@@ -3,7 +3,7 @@ from .version import __version__
 
 # 导入主要的监控类
 from .monitor.GPU_monitor import GPUMonitor
-from .monitor.module_monitor import ModuleMonitor
+from .monitor.module_monitor import layer_monitor,layer_time,pre_norm_time,post_norm_time,atten_time,ffn_time,atten_ffn_norm_monitor
 
 # 导入操作相关的类
 from .ops.HMA import HMA
@@ -16,7 +16,12 @@ from .utils import *
 __all__ = [
     '__version__',
     'GPUMonitor',
-    'ModuleMonitor',
+    'layer_monitor',
+    'layer_time',
+    'pre_norm_time',
+    'post_norm_time',
+    'atten_time,ffn_time',
+    'atten_ffn_norm_monitor',
     'HMA',
     'Migration',
     'utils',

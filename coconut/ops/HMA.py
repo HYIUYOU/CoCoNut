@@ -224,12 +224,11 @@ def HMA(module, module_device, module_copy_device, half_idx = 3):
             half_idx: 用于切分模型的索引
         Examples:
             >>> from coconut import *
-            >>> module_copy = copy_module(4,device1,model)
-            >>> module_copy_1 = copy_module(4,device1,model)
-            >>> module_copy_2 = copy_module(8,device1,model)
-            >>> module_copy_3 = copy_module(14,device1,model)
+            >>> module_copy_1 = COPY.copy_module_with_id(4,device1,model)
+            >>> module_copy_2 = COPY.copy_module_with_id(8,device1,model)
+            >>> module_copy_3 = COPY.copy_module_with_id(14,device1,model)
             >>> module = {
-            >>>     4:module_copy,
+            >>>     4:module_copy_1,
             >>>     8:module_copy_2,
             >>>     14:module_copy_3
             >>>   }

@@ -142,7 +142,7 @@ def create_monitor_modules_forward(layer):
     return forward,layer_time
 
 
-def layer_monitor(model,layer):
+def layer_monitor(model,layer_id):
     """
     监控模型的指定层
     Args:
@@ -151,7 +151,7 @@ def layer_monitor(model,layer):
     Returns:
         Dict: 每个层的时间
     """
-    model.forward,layer_time = create_monitor_modules_forward(layer)
+    model.forward,layer_time = create_monitor_modules_forward(layer_id)
     return layer_time
 
 
