@@ -1,5 +1,9 @@
 # CoCoNut
 
-## how to use
+## quick start
 ```bash
-$ git clone 
+$ git clone https://github.com/HYIUYOU/CoCoNut.git
+$ cd CoCoNut
+$ pip install -e .
+```
+

@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: CoCoNut
+Version: 0.1.0
+Summary: CoCoNut is a drinking buddy for your deep learning models.
+Author: HBigo
+Author-email: hbigopk@gmail.com
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: pynvml>=11.0.0
+Requires-Dist: torch>=1.8.0
+Requires-Dist: transformers>=4.0.0
+
+# CoCoNut
+
+## quick start
+```bash
+$ git clone https://github.com/HYIUYOU/CoCoNut.git
+$ cd CoCoNut
+$ pip install -e .
+```
+

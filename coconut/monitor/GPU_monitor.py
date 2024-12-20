@@ -90,12 +90,12 @@ class GPUMonitor:
         finally:
             pynvml.nvmlShutdown()
 
-# # # 使用示例
-if __name__ == "__main__":
+# # # # 使用示例
+# if __name__ == "__main__":
 
-    try:
-        monitor = GPUMonitor()
-        gpus = monitor.get_gpu_info()  
-        print(gpus[1].device)
-    except Exception as e:
-        print(f"Error: {e}")
+#     try:
+#         monitor = GPUMonitor()
+#         gpus = monitor.get_gpu_info()  
+#         print(gpus[1].device)
+#     except Exception as e:
+#         print(f"Error: {e}")
