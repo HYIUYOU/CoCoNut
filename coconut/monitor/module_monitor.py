@@ -6,8 +6,9 @@ from transformers.cache_utils import Cache, DynamicCache
 from transformers.modeling_outputs import BaseModelOutputWithPast
 logger = logging.get_logger(__name__)
 
-layer_time = {}
 
+
+layer_time = {}
 def create_monitor_modules_forward(layer):
     def forward(
         self,
@@ -146,7 +147,7 @@ def layer_monitor(model,layer):
     监控模型的指定层
     Args:
         model (nn.Module): 模型
-        layer (List[int]): 待监控的层
+        layer (List[int]): 待检测的层
     Returns:
         Dict: 每个层的时间
     """
@@ -154,5 +155,112 @@ def layer_monitor(model,layer):
     return layer_time
 
 
+# 定义一个函数来测量显存使用
+def measure_memory_usage(device):
+    torch.cuda.synchronize()  # 确保所有操作都完成
+    return torch.cuda.memory_allocated(device)
 
+# 下面是更小粒度的监控，监控每个模块的时间
+
+pre_norm_time = []
+post_norm_time = []
+atten_time = []
+ffn_time = []
+
+def create_monitor_atten_ffn_forward():
+#def create_monitor_atten_ffn_forward(device_id,norm_time,norm_mem,atten_time,atten_mem,ffn_time,ffn_mem):
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_value: Optional[Cache] = None,
+        output_attentions: Optional[bool] = False,
+        use_cache: Optional[bool] = False,
+        cache_position: Optional[torch.LongTensor] = None,
+        position_embeddings: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,  # will become mandatory in v4.46
+        **kwargs,
+    ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
+        """
+        Args:
+            hidden_states (`torch.FloatTensor`): input to the layer of shape `(batch, seq_len, embed_dim)`
+            attention_mask (`torch.FloatTensor`, *optional*):
+                attention mask of size `(batch_size, sequence_length)` if flash attention is used or `(batch_size, 1,
+                query_sequence_length, key_sequence_length)` if default attention is used.
+            output_attentions (`bool`, *optional*):
+                Whether or not to return the attentions tensors of all attention layers. See `attentions` under
+                returned tensors for more detail.
+            use_cache (`bool`, *optional*):
+                If set to `True`, `past_key_values` key value states are returned and can be used to speed up decoding
+                (see `past_key_values`).
+            past_key_value (`Tuple(torch.FloatTensor)`, *optional*): cached past key and value projection states
+            cache_position (`torch.LongTensor` of shape `(sequence_length)`, *optional*):
+                Indices depicting the position of the input sequence tokens in the sequence
+            position_embeddings (`Tuple[torch.FloatTensor, torch.FloatTensor]`, *optional*):
+                Tuple containing the cosine and sine positional embeddings of shape `(batch_size, seq_len, head_dim)`,
+                with `head_dim` being the embedding dimension of each attention head.
+            kwargs (`dict`, *optional*):
+                Arbitrary kwargs to be ignored, used for FSDP and other methods that injects code
+                into the model
+        """
+
+        residual = hidden_states
+        start_time = time.time()
+        #start_mem =  measure_memory_usage(device_id)
+        hidden_states = self.input_layernorm(hidden_states)
+        torch.cuda.synchronize()
+        pre_norm_time.append(time.time()-start_time)
+        #norm_mem.append(measure_memory_usage(device_id)-start_mem)
+        # Self Attention
+        start_time = time.time()
+        #start_mem =  measure_memory_usage(device_id)
+        hidden_states, self_attn_weights, present_key_value = self.self_attn(
+            hidden_states=hidden_states,
+            attention_mask=attention_mask,
+            position_ids=position_ids,
+            past_key_value=past_key_value,
+            output_attentions=output_attentions,
+            use_cache=use_cache,
+            cache_position=cache_position,
+            position_embeddings=position_embeddings,
+            **kwargs,
+        )
+        torch.cuda.synchronize()
+        atten_time.append(time.time()-start_time)
+        #atten_mem.append(measure_memory_usage(device_id)-start_mem)
+        hidden_states = residual + hidden_states
+
+        # Fully Connected
+        residual = hidden_states
+        start_time = time.time()
+        hidden_states = self.post_attention_layernorm(hidden_states)
+        torch.cuda.synchronize()
+        post_norm_time.append(time.time()-start_time)
+
+        start_time = time.time()
+        #start_mem =  measure_memory_usage(device_id)
+        hidden_states = self.mlp(hidden_states)
+        torch.cuda.synchronize()
+        ffn_time.append(time.time()-start_time)
+        #ffn_mem.append(measure_memory_usage(device_id)-start_mem)
+        hidden_states = residual + hidden_states
+        outputs = (hidden_states,)
+
+        if output_attentions:
+            outputs += (self_attn_weights,)
+
+        if use_cache:
+            outputs += (present_key_value,)
+
+        return outputs
+    return forward,pre_norm_time,post_norm_time,atten_time,ffn_time
     
+def atten_ffn_norm_monitor():
+    """
+    监控模型的每个模块的时间
+    Returns:
+        Dict: 每个模块的时间
+    """
+    decode_forward,pre_norm_time,post_norm_time,atten_time,ffn_time = create_monitor_atten_ffn_forward()
+    LlamaDecoderLayer.forward = decode_forward.__get__(None,LlamaDecoderLayer)
+    return pre_norm_time,post_norm_time,atten_time,ffn_time
